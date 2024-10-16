@@ -5,7 +5,7 @@
 
 `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
 
-2. Créer un environnement pour ce projet en utilisant le fichier *pytorch.yml*
+2. `pip install wget`
 3. Execute le programme :
        `python3 main.py --experiment "faces"`
 
