@@ -6,6 +6,7 @@
 `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
 
 2. `pip install wget`
+   `pip install tqdm`
 3. Execute le programme :
        `python3 main.py --experiment "faces"`
 
