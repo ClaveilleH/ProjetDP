@@ -4,7 +4,7 @@
 - Clone the directory `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
 - Enter into the "distributed" directory
 - Activate your conda environment
--`torchrun --nnodes=1 --nproc-per-node=2 launch.py`
+- Execute the code `torchrun --nnodes=1 --nproc-per-node=2 launch.py`
 
 ## Tasks
 1. Check the code of launch.py, what are the functions to get the rank of the process and the number of all processes?
