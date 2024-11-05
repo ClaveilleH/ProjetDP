@@ -13,8 +13,9 @@
    -- How to modify the code of broadcast.py that the rank 0 broadcast to all the others
    -- From the result of reduce.py, can you see which algorithm is used?
 
-###Exercice
+## Exercice
 4. Code the following algorithm
-
+Suppose that there are n + 1 processes that rank 0 is considered as the server and the
+others are considered as the clients
 
 ![Algorithm](algo.PNG){width=600 height=700}
