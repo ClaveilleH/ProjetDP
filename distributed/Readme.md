@@ -15,4 +15,4 @@
 
 ###Exercice
 4. Code the following algorithm
-![Algorithm](algo.jpg){width=300 height=200}
+![Algorithm](algo.PNG){width=300 height=200}
