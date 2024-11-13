@@ -144,3 +144,4 @@ data/
 # Zip
 *.zip
 
+/distributed/algo.py

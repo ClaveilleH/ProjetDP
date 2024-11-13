@@ -31,10 +31,15 @@ def get_model(experiment_name, device):
 
     """
 
-    if experiment_name == "mnist":
-        pass
+    if experiment_name == "fash_mnist":
+        model = LinearLayer(input_dim=28*28, output_dim=10, bias=True)
     elif experiment_name == "faces":
         model = LinearLayer(input_dim=112*92, output_dim=40, bias=True)
+    elif experiment_name == "titanic":
+        model = nn.Sequential(
+            LinearLayer(input_dim=7, output_dim=1, bias=True),
+            nn.Sigmoid()
+        )
     else:
         raise NotImplementedError(
             experiment_not_implemented_message(experiment_name=experiment_name)

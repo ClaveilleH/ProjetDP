@@ -2,7 +2,7 @@ import torch
 from utils import experiment_not_implemented_message
 from models import get_model
 from optim import get_optimizer
-from metric import accuracy
+from metric import accuracy, accuracy_binary
 
 
 class Trainer:
@@ -68,14 +68,13 @@ class Trainer:
         self.model.train()
 
         for x, y in loader:
-            x = x.to(self.device).type(torch.float32)
-            y = y.to(self.device).type(torch.long)
-            x = x.view(-1, x.shape[2]*x.shape[3])
+            if x.dim() > 3:
+                y = y.type(torch.long)
+                x = x.view(-1, x.shape[2] * x.shape[3])
 
             self.optimizer.zero_grad()
 
             outs = self.model(x)
-
             loss = self.criterion(outs, y)
 
             loss.backward()
@@ -103,10 +102,11 @@ class Trainer:
         n_samples = 0
 
         with torch.no_grad():
+
             for x, y in loader:
-                x = x.to(self.device).type(torch.float32)
-                y = y.to(self.device).type(torch.long)
-                x = x.view(-1, x.shape[2] * x.shape[3])
+                if x.dim() > 3:
+                    y = y.type(torch.long)
+                    x = x.view(-1, x.shape[2] * x.shape[3])
 
                 outs = self.model(x)
 
@@ -114,7 +114,6 @@ class Trainer:
                 global_metric += self.metric(outs, y).item() * y.size(0)
 
                 n_samples += y.size(0)
-
         return global_loss / n_samples, global_metric / n_samples
 
 
@@ -126,7 +125,7 @@ def get_trainer(experiment_name, device, optimizer_name, lr, seed):
     ----------
     experiment_name: str
         name of the experiment to be used;
-        possible are {"mnist"}
+        possible are {"fash_mnist"}
 
     device: str
         used device; possible `cpu` and `cuda`
@@ -145,9 +144,12 @@ def get_trainer(experiment_name, device, optimizer_name, lr, seed):
     """
     torch.manual_seed(seed)
 
-    if experiment_name == "faces":
+    if experiment_name == "faces" or experiment_name == "fash_mnist":
         criterion = torch.nn.CrossEntropyLoss(reduction="mean").to(device)
         metric = accuracy
+    elif experiment_name == "titanic":
+        criterion = torch.nn.BCELoss().to(device)
+        metric = accuracy_binary
     else:
         raise NotImplementedError(
             experiment_not_implemented_message(experiment_name=experiment_name)

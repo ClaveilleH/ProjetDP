@@ -24,6 +24,9 @@ def get_optimizer(optimizer_name, model, lr):
             model.parameters(),
             lr=lr
         )
+    elif optimizer_name == "sgd":
+        return optim.SGD(model.parameters(),
+                         lr=lr)
     else:
         raise NotImplementedError(
             f"{optimizer_name} is not a possible optimizer name; possible are: 'sgd', 'adam'"

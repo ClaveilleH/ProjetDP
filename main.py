@@ -16,7 +16,10 @@ if __name__ == '__main__':
     print("\n=> Load Data..")
     train_loader = \
         get_loader(experiment_name=args.experiment,
-                   batch_size=args.batch_size)
+                   batch_size=args.batch_size, is_trainning=True)
+    test_loader = \
+        get_loader(experiment_name=args.experiment,
+                   batch_size=args.batch_size, is_trainning=False)
 
     print("\n=> Build Trainer..")
     trainer = \
@@ -29,6 +32,9 @@ if __name__ == '__main__':
     print("\n=> Start training..")
     for t in tqdm(range(args.epochs)):
         trainer.fit_epoch(loader=train_loader)
-        loss, metric = trainer.evaluate_loader(loader=train_loader)
-        print(f"Epoch: {t}, Loss: {loss:.2f}, Accuracy: {metric*100:.2f}%")
+        train_loss, train_metric = trainer.evaluate_loader(loader=train_loader)
+        test_loss, test_metric = trainer.evaluate_loader(loader=test_loader)
+
+        print(f"Epoch: {t+1}, Train Loss: {train_loss:.2f}, Train Accuracy: {train_metric*100:.2f}%, "
+              f"Test Loss: {test_loss:.2f}, Test Accuracy: {test_metric*100:.2f}% ")
 

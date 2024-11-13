@@ -9,7 +9,7 @@ def parse_args(args_list=None):
     parser.add_argument(
         '--experiment',
         help='name of the experiment, possible are:'
-             '{"faces"}',
+             '{"faces", "fash_mnist", "titanic"}',
         type=str,
         required=True
     )
