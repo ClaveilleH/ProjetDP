@@ -2,7 +2,7 @@ import torch
 import torch.distributed as dist
 
 def run(rank, size):
-    tensor = torch.tensor(float(rank))
+    tensor = torch.tensor(1)
     iterations = 10
     group = [i for i in range(size)]
     for i in zip(range(iterations)):

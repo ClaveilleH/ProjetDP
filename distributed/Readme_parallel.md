@@ -1,7 +1,8 @@
 # Parallel machine learning using PyTorch
 ## Start
 - Book fours cores in NEF cluster
-- Clone the directory `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
+- Enter to the directory worked previously
+- Update the directory `git pull` or `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
 - Enter into the "distributed" directory
 - Activate your conda environment
 - Execute the code `torchrun --nnodes=1 --nproc-per-node=4 training.py --batch_size 8000000`
