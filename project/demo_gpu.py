@@ -29,7 +29,7 @@ def run(rank, size):
     sample_size = 32//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
     model = models.resnet18().to(device_id)
-    model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
+    model.fc = nn.Linear(model.fc.in_features, len(dataset.classes)).to(device_id)
     ddp_model = DDP(model, device_ids=[device_id])
     loss_fn = nn.CrossEntropyLoss()
     optimizer = optim.SGD(ddp_model.parameters(), lr=0.001)
