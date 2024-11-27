@@ -23,7 +23,7 @@ def run(rank, size):
     dataset_size = len(dataset)
     localdataset_size = dataset_size//size
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
-    sample_size = 1024//size
+    sample_size = 128//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
     model = models.resnet18()
     model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
