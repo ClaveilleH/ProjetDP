@@ -25,9 +25,9 @@ def run(rank, size):
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
     sample_size = 32//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
-    model = models.resnet18()
+    model = models.resnet18().to(rank)
     model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
-    ddp_model = DDP(model)
+    ddp_model = DDP(model, device_ids=[rank])
     loss_fn = nn.CrossEntropyLoss()
     optimizer = optim.SGD(ddp_model.parameters(), lr=0.001)
 
@@ -35,6 +35,8 @@ def run(rank, size):
     print(f"Start running basic DDP example on rank {rank} with model Resnet18.")
     st = time.time()
     train_images, train_labels = next(iter(dataloader))
+    train_images = train_images.to(rank)
+    train_labels = train_labels.to(rank)
     et_read = time.time()
     print(f'Loading time: {et_read-st} seconds')
     optimizer.zero_grad()
@@ -47,7 +49,7 @@ def run(rank, size):
     print(f"Finished running basic DDP example on rank {rank}.")
 
 if __name__ == "__main__":
-    dist.init_process_group("gloo", init_method="env://")
+    dist.init_process_group("nccl", init_method="env://")
     size = dist.get_world_size()
     rank = dist.get_rank()
     run(rank, size)
