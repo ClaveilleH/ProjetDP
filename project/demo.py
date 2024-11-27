@@ -12,7 +12,7 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 def run(rank, size):
 
-    dataset = torchvision.datasets.ImageNet('/data/coati/user/tdasilva/dataset/imagenet64', download=False)
+    dataset = torchvision.datasets.Imagenette('/data/coati/user/tdasilva/dataset/imagenet64', download=False)
     dataset_size = len(dataset)
     localdataset_size = dataset_size//size
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
