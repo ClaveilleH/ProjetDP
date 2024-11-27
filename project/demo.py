@@ -10,7 +10,7 @@ from torch.utils.data import DataLoader
 from torch.nn.parallel import DistributedDataParallel as DDP
 
 
-def run(rank, size, args):
+def run(rank, size):
 
     dataset = torchvision.datasets.ImageNet('/data/coati/user/tdasilva/dataset/imagenet64', download=False)
     dataset_size = len(dataset)
@@ -42,4 +42,4 @@ if __name__ == "__main__":
     dist.init_process_group("gloo", init_method="env://")
     size = dist.get_world_size()
     rank = dist.get_rank()
-    run(rank, size, args)
+    run(rank, size)
