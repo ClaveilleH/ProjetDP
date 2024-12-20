@@ -20,3 +20,16 @@
 - Do you see the time difference?
 
 ## Requirement for the project, please check the slide!
+
+## Supplementary details for the plots:
+- Impact of the computing nodes (4 plots): 
+  - cpu (two plots): 
+    - time (loading time, computing and communication time) vs number of devices 
+    - Throughput (batch size/time) vs number of devices
+  - gpu (two plots)
+    - time (loading time, computing and communication time) vs number of devices 
+    - Throughput (batch size/time) vs number of devices
+
+- Impact of the batch size (4 plots):
+  - Three throughput plots vs number of gpus devices for batch size 16, 64, 128 respectively
+  - Optimal number of gpus vs batch sizes
