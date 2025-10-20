@@ -68,7 +68,7 @@ class Trainer:
         self.model.train()
 
         for x, y in loader:
-            if x.dim() > 3:
+            if self.model.__class__.__name__ == "LinearLayer":
                 y = y.type(torch.long)
                 x = x.view(-1, x.shape[2] * x.shape[3])
 
@@ -104,7 +104,7 @@ class Trainer:
         with torch.no_grad():
 
             for x, y in loader:
-                if x.dim() > 3:
+                if self.model.__class__.__name__ == "LinearLayer":
                     y = y.type(torch.long)
                     x = x.view(-1, x.shape[2] * x.shape[3])
 

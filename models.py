@@ -12,6 +12,14 @@ class LinearLayer(nn.Module):
     def forward(self, x):
         return self.fc(x)
 
+class NeuralNetwork(nn.Module):
+    def __init__(self, output_dim, bias=True):
+        super(NeuralNetwork, self).__init__()
+        pass
+
+    def forward(self, x):
+        pass
+        return x
 
 def get_model(experiment_name, device):
     """
@@ -32,6 +40,7 @@ def get_model(experiment_name, device):
     """
     if experiment_name == "faces":
         model = LinearLayer(input_dim=112*92, output_dim=40, bias=True)
+        #model = NeuralNetwork(output_dim=40, bias=True)
     else:
         raise NotImplementedError(
             experiment_not_implemented_message(experiment_name=experiment_name)

@@ -24,7 +24,7 @@ if __name__ == '__main__':
     print("\n=> Build Trainer..")
     trainer = \
         get_trainer(experiment_name=args.experiment,
-                    device=args.device,
+                    device = args.device,
                     optimizer_name=args.optimizer,
                     lr=args.lr,
                     seed=seed)

@@ -39,5 +39,8 @@
 
     What is your observation?
 
-4. Add a Fashion-MNIST dataset to the program and call the task "fash_mnist."
+4. Implement a convolutional neural network in `NeuralNetwork` class located in models.py file (a simple one with one convolutional layer (64 filters with kernel size 5 and stride 2) followed each by a maxPooling layer (size 2), a flatten layer and a fully connected layer (30814*40)).
+Test the performance of this model. 
+![img.png](img.png)
+5. Add a Fashion-MNIST dataset to the program and call the task "fash_mnist."
     Hint: You need to modify the args.py, models.py, loader.py, and trainer.py files. Run the program with the appropriate arguments.
