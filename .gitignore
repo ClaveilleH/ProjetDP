@@ -145,3 +145,6 @@ data/
 *.zip
 
 /distributed/algo.py
+/distributed
+/project
+readme_french.md
