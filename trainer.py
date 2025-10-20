@@ -2,7 +2,7 @@ import torch
 from utils import experiment_not_implemented_message
 from models import get_model
 from optim import get_optimizer
-from metric import accuracy, accuracy_binary
+from metric import accuracy
 
 
 class Trainer:
@@ -144,12 +144,9 @@ def get_trainer(experiment_name, device, optimizer_name, lr, seed):
     """
     torch.manual_seed(seed)
 
-    if experiment_name == "faces" or experiment_name == "fash_mnist":
+    if experiment_name == "faces":
         criterion = torch.nn.CrossEntropyLoss(reduction="mean").to(device)
         metric = accuracy
-    elif experiment_name == "titanic":
-        criterion = torch.nn.BCELoss().to(device)
-        metric = accuracy_binary
     else:
         raise NotImplementedError(
             experiment_not_implemented_message(experiment_name=experiment_name)

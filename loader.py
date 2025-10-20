@@ -57,6 +57,6 @@ def get_loader(experiment_name, batch_size=1, is_trainning = True):
             experiment_not_implemented_message(experiment_name=experiment_name)
         )
 
-    data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=4)
+    data_loader = torch.utils.data.DataLoader(dataset, batch_size=batch_size, shuffle=True, num_workers=2)
 
     return data_loader

@@ -9,7 +9,7 @@ def parse_args(args_list=None):
     parser.add_argument(
         '--experiment',
         help='name of the experiment, possible are:'
-             '{"faces", "fash_mnist", "titanic"}',
+             '{"faces"}',
         type=str,
         required=True
     )
@@ -61,5 +61,7 @@ def parse_args(args_list=None):
     if args.device == "cuda" and not torch.cuda.is_available():
         args.device = "cpu"
         warnings.warn("CUDA is not available, device is automatically set to \"CPU\"!", RuntimeWarning)
+    if torch.cuda.is_available():
+        args.device == "cuda"
 
     return args
