@@ -11,7 +11,7 @@
 
 3. Execute the program:
 
-4. python3 main.py --experiment "faces"
+`python3 main.py --experiment "faces"`
 
 ## Questions:
 

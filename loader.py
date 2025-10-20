@@ -19,36 +19,6 @@ data_transform = transforms.Compose([
                              std=[0.229,])
     ])
 
-
-class TitanicData(torch.utils.data.Dataset):
-    def __init__(self, nom_fichier, is_training=True):
-        data = pd.read_csv(nom_fichier)
-        data.Sex = data.Sex.astype('category').cat.codes.astype("int8")
-        data.Embarked = data.Embarked.astype('category').cat.codes.astype("int8")
-        data.describe()
-        data.Age.fillna(int(data.Age.mean()), inplace=True)
-        data.Embarked.fillna(int(data.Embarked.mean()), inplace=True)
-        df_train = data.drop(['Name', 'Ticket', 'Cabin', 'PassengerId'], axis=1)
-        df_train.Age = MinMaxScaler().fit_transform(np.array(df_train.Age).reshape(-1, 1))
-        df_train.Fare = MinMaxScaler().fit_transform(np.array(df_train.Fare).reshape(-1,1))
-        numpy_y = np.array(df_train["Survived"])
-        numpy_x = np.array(df_train.drop("Survived", axis=1))
-        x_train, x_test, y_train, y_test = train_test_split(numpy_x, numpy_y,
-                                                            test_size=0.2, random_state=1)
-        if is_training:
-            self.X = torch.tensor(x_train, dtype=torch.float32)
-            self.label = torch.unsqueeze(torch.tensor(y_train, dtype=torch.float32), dim=-1)
-        else:
-            self.X = torch.tensor(x_test, dtype=torch.float32)
-            self.label = torch.unsqueeze(torch.tensor(y_test, dtype=torch.float32), dim=-1)
-
-    def __len__(self):
-        return len(self.label)
-
-    def __getitem__(self, indice):
-        return self.X[indice], self.label[indice]
-
-
 def get_loader(experiment_name, batch_size=1, is_trainning = True):
     """
     constructs data loader for an experiment
@@ -82,14 +52,6 @@ def get_loader(experiment_name, batch_size=1, is_trainning = True):
             pathname = "data/faces/testing"
         dataset = torchvision.datasets.ImageFolder(pathname, transform=data_transform)
 
-    elif experiment_name == "fash_mnist":
-        if is_trainning:
-            dataset = torchvision.datasets.FashionMNIST('data/', train=True, transform=data_transform, download=True)
-        else:
-            dataset = torchvision.datasets.FashionMNIST('data/', train=False, transform=data_transform, download=True)
-
-    #elif experiment_name == "titanic":
-    #    dataset = TitanicData("data/titanic/train.csv", is_training=is_trainning)
     else:
         raise NotImplementedError(
             experiment_not_implemented_message(experiment_name=experiment_name)

@@ -2,7 +2,7 @@ import torch
 import time
 from args import parse_args
 from trainer import get_trainer
-from loader import get_loader
+from loader_answer import get_loader
 from tqdm import tqdm
 
 if __name__ == '__main__':
