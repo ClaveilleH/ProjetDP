@@ -62,6 +62,6 @@ def parse_args(args_list=None):
         args.device = "cpu"
         warnings.warn("CUDA is not available, device is automatically set to \"CPU\"!", RuntimeWarning)
     if torch.cuda.is_available():
-        args.device == "cuda"
+        args.device = "cuda"
 
     return args
