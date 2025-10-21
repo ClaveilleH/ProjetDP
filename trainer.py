@@ -71,7 +71,8 @@ class Trainer:
             if self.model.__class__.__name__ == "LinearLayer":
                 y = y.type(torch.long)
                 x = x.view(-1, x.shape[2] * x.shape[3])
-
+            x.to(self.device)
+            y.to(self.device)
             self.optimizer.zero_grad()
 
             outs = self.model(x)
@@ -107,7 +108,8 @@ class Trainer:
                 if self.model.__class__.__name__ == "LinearLayer":
                     y = y.type(torch.long)
                     x = x.view(-1, x.shape[2] * x.shape[3])
-
+                x.to(self.device)
+                y.to(self.device)
                 outs = self.model(x)
 
                 global_loss += self.criterion(outs, y).item() * y.size(0)
