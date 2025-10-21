@@ -8,8 +8,8 @@
 
 
 2. Install [PyTorch](https://pytorch.org/get-started/locally/)
-
-3. Execute the program:
+3. Install tqdm: `pip install tqdm`
+4. Execute the program:
 
 `python3 main.py --experiment "faces"`
 
