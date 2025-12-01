@@ -3,7 +3,7 @@ import torch.distributed as dist
 
 def run(rank, size):
     tensor = torch.tensor(rank)
-    group = dist.new_group([0, 1, 2, 3])
+    group = dist.new_group(range(size))
     # print(f"I am {rank} of {size} with a tensor {tensor}")
 
     if rank == 0: print("**********\nStarting Communication\n************")
