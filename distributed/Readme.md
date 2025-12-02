@@ -1,6 +1,6 @@
 # Pytorch distributed package
 ## Start
-- Book two CPU cores in Grid5000 cluster
+- Book two CPU cores in Grid5000 cluster (oarsub -l host=1/core=2,walltime=2:0:0 -I)
 - Clone the directory `git clone https://gitlab.inria.fr/chxu/pytorch_exercice.git`
 - Enter into the "distributed" directory
 - Activate your conda environment
