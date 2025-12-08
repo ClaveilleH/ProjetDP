@@ -9,20 +9,39 @@ import torchvision
 from torch.utils.data import DataLoader
 import os
 from torch.nn.parallel import DistributedDataParallel as DDP
+from torchvision.datasets import ImageFolder
+from torchvision.datasets.utils import download_url
+import tarfile
 
 
 def run(rank, size):
     torch.cuda.set_device(int(os.environ["LOCAL_RANK"]))
     # create model and move it to GPU with id rank
     device_id = rank % torch.cuda.device_count()
-    # Define transformations
+    # --- 1. Set paths ---
+    dataset_url = "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz"
+    download_root = "./"
+    dataset_folder = os.path.join(download_root, "imagenette2-160")
+
+    # --- 2. Download the dataset ---
+    if not os.path.exists(dataset_folder):
+        print("Downloading Imagenette...")
+        download_url(dataset_url, download_root)
+        # Extract
+        print("Extracting...")
+        with tarfile.open(os.path.join(download_root, "imagenette2-160.tgz")) as tar:
+            tar.extractall(path=download_root)
+        print("Done!")
+
+    # --- 3. Define transforms ---
     transform_train = transforms.Compose([
-        transforms.RandomResizedCrop(224),
-        transforms.RandomHorizontalFlip(),
+        transforms.Resize((128, 128)),
         transforms.ToTensor(),
-        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
     ])
-    dataset = torchvision.datasets.Imagenette('/data/neo/user/chxu/', transform=transform_train)
+
+    # --- 4. Load dataset with ImageFolder ---
+    dataset = ImageFolder(root=os.path.join(dataset_folder, "train"), transform=transform_train)
+
     dataset_size = len(dataset)
     localdataset_size = dataset_size//size
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
