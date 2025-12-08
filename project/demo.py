@@ -15,14 +15,6 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 
 def run(rank, size):
-    # Define transformations
-    #transform_train = transforms.Compose([
-    #    transforms.RandomResizedCrop(224),
-    #    transforms.RandomHorizontalFlip(),
-    #    transforms.ToTensor(),
-    #    transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
-    #])
-    #dataset = torchvision.datasets.Imagenette('/data/neo/user/chxu/', transform=transform_train)
     # --- 1. Set paths ---
     dataset_url = "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz"
     download_root = "./"
