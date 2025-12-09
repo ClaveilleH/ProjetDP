@@ -1,4 +1,4 @@
-# Project: Evaluating the Efficiency of Data Parallelism in Machine Learning within NEF
+# Project: Evaluating the Efficiency of Data Parallelism in Machine Learning within Grid5000
 
 ## Goal:  The objective of this project is to demonstrate the benefits of parallelizing the training process for machine learning models.
 
@@ -12,11 +12,14 @@
 - Do you see the time difference?
 
 ## Start II: Test Demo_gpu
-- Book two GPUs in Grid'5000 cluster
+- Book one GPUs in Grid'5000 cluster
 - Enter into the "project" directory
-- Activate your conda environment
-- Execute the code `torchrun --nnodes=1 --nproc-per-node=1 demo_gpu.py`
-- Execute the code `torchrun --nnodes=1 --nproc-per-node=2 demo_gpu.py`
+- Non-interative mode for two GPUs scenario:
+  - `chmod u+x run_gpu.sh`
+  - `oarsub -l /host=1,gpu=2,walltime=4:00:00 -t besteffort ./run_gpu.sh`
+  - Get the jobID 
+    - To check the status: oarstat -j jobID
+    - When finished, check the file OAR.jobID.stdout
 - Do you see the time difference?
 
 ## Requirement for the project, please check the slide!
