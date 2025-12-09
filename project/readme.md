@@ -12,7 +12,6 @@
 - Do you see the time difference?
 
 ## Start II: Test Demo_gpu
-- Book one GPUs in Grid'5000 cluster
 - Enter into the "project" directory
 - Non-interative mode for two GPUs scenario:
   - `chmod u+x run_gpu.sh`
