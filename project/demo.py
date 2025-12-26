@@ -45,7 +45,8 @@ def run(rank, size):
     sample_size = 32//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
     # model = models.resnet18()
-    model = models.vgg19_bn(pretrained=False)
+    # model = models.vgg19_bn(pretrained=False)
+    model = models.vgg19_bn()
     # model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
     model.classifier[6] = nn.Linear(model.classifier[6].in_features, len(dataset.classes))
     ddp_model = DDP(model)
