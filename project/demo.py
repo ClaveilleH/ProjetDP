@@ -13,13 +13,14 @@ from torch.utils.data import DataLoader
 
 from torch.nn.parallel import DistributedDataParallel as DDP
 
-loading_time = []
-total_loading_time = 0
-computing_time = []
-total_computing_time = 0
 
 
 def run(rank, size):
+
+    loading_time = []
+    # total_loading_time = 0
+    computing_time = []
+    # total_computing_time = 0
     # --- 1. Set paths ---
     dataset_url = "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz"
     download_root = "./"
@@ -76,12 +77,15 @@ def run(rank, size):
     optimizer.step()
     dist.destroy_process_group()
     print(f"Finished running basic DDP example on rank {rank}.")
+    return loading_time, computing_time
 
 if __name__ == "__main__":
     dist.init_process_group("gloo", init_method="env://")
     size = dist.get_world_size()
     rank = dist.get_rank()
-    run(rank, size)
+    loading_time, computing_time = run(rank, size)
+    total_loading_time = sum(loading_time)
+    total_computing_time = sum(computing_time)
     # on stocke le resultat dans un fichier pour le recuperer apres
     with open(f'result_gpu_rank{rank}.txt', 'w') as f:
         f.write(f'Loading times: {loading_time}\n')
