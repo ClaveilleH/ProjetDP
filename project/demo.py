@@ -17,10 +17,6 @@ from torch.nn.parallel import DistributedDataParallel as DDP
 
 def run(rank, size):
 
-    loading_time = []
-    # total_loading_time = 0
-    computing_time = []
-    # total_computing_time = 0
     # --- 1. Set paths ---
     dataset_url = "https://s3.amazonaws.com/fast-ai-imageclas/imagenette2-160.tgz"
     download_root = "./"
@@ -65,14 +61,13 @@ def run(rank, size):
     train_images, train_labels = next(iter(dataloader))
     et_read = time.time()
     print(f'Loading time: {et_read-st} seconds')
-    loading_time.append(et_read-st)
-    # total_loading_time += (et_read-st)
+    loading_time = (et_read-st)
     optimizer.zero_grad()
     outputs = ddp_model(train_images)
     loss_fn(outputs, train_labels).backward()
     et = time.time()
     print(f'Computing + Communication time: {et-et_read} seconds')
-    computing_time.append(et-et_read)
+    computing_time = (et-et_read)
     # total_computing_time += (et-et_read)
     optimizer.step()
     dist.destroy_process_group()
@@ -86,9 +81,7 @@ if __name__ == "__main__":
     loading_time, computing_time = run(rank, size)
     total_loading_time = sum(loading_time)
     total_computing_time = sum(computing_time)
-    # on stocke le resultat dans un fichier pour le recuperer apres
-    with open(f'result_gpu_rank{rank}.txt', 'w') as f:
-        f.write(f'Loading times: {loading_time}\n')
-        f.write(f'Total loading time: {total_loading_time}\n')
-        f.write(f'Computing times: {computing_time}\n')
-        f.write(f'Total computing time: {total_computing_time}\n')
+    # on stocke le resultat dans un fichier csv pour pouvoir le traiter plus tard
+    with open("results_cpu.csv", "a") as f:
+        f.write(f"{rank};{size};{total_loading_time};{total_computing_time};{total_loading_time+total_computing_time}\n")
+    

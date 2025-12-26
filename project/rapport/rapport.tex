@@ -75,10 +75,20 @@ Pour cela nous avons utilisé le cluster Grid5000 et plus particulièrement le n
 % ======================================================================================================================
 \chapter{Evaluation}
 \section{Details du noeud testé} %vgg19_bn
-\input{rapport/details_noeud}
+% \input{rapport/details_noeud}
 
 \section{Details du modele d'entraînement testé}
 \section{Impact du nombre de CPU/GPU}
+Afin d'évaluer l'impact du nombre de ressources de calcul sur les performances d'entraînement, 
+j'ai réalisé plusieurs tests en faisant varier le nombre de CPU et de GPU utilisés.
+J'ai aussi modifié le fichier \textit{demo.py} pour enregistrer les temps de chargement des données et les temps de calculs dans des fichiers csv.
+% \input{rapport/impact_devices}
+\subsection{Impact du nombre de CPU}
+% \input{rapport/impact_cpu}
+
+
+\subsection{Impact du nombre de GPU}
+% \input{rapport/impact_gpu}
 \section{Impact de la taille du batch}
     % Test additional batch size 16,64,128 (GPU node)
     % Three plots (for throughput) (3 points)
