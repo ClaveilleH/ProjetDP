@@ -1,0 +1,88 @@
+\documentclass{rapportClass} % Classe de document (rapport)
+
+
+
+\title{Rapport de Projet}
+\author{Hugo CLAVEILLE}
+% -- Master 1 Informatique
+\date{\today}
+
+
+
+
+% Appliquer aussi aux pages de type 'plain' (début de chapitre, sommaire…)
+% \fancypagestyle{plain}{
+%   \fancyhf{}
+%   \fancyhead[L]{Rapport de Projet}
+%   \fancyhead[C]{M1 Informatique}
+%   \fancyhead[R]{Hugo}
+%   \fancyfoot[C]{\thepage}
+%   \renewcommand{\headrulewidth}{0.4pt}
+% }
+
+\begin{document}
+
+\begin{titlepage}
+    \thispagestyle{empty} % pas d'en-tête/pied ici
+    
+    \begin{center}
+        % Logo en haut
+        \includegraphics[width=1\textwidth]{logo.png}\\[2cm]
+        
+        % Titre
+        {\Huge \textbf{Rapport de Projet}}\\[1cm]
+        {\Large Distributed Memory}\\[1cm]
+
+        \vspace{1cm}
+        % Auteur
+        \textbf{Hugo CLAVEILLE}\\[0.5cm]
+        
+        % Sous-titre
+        {\Large Master 1 Informatique}\\[2cm]
+        
+        % Date
+        \vfill
+        {\large \today}
+    \end{center}
+\end{titlepage}
+
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\newpage
+
+% ======================================================================================================================
+Introduction of the cluster Grid5000 and node tested (2 points) 
+*Introduction of the task (1 point) 
+Evaluation (17 points) 
+    Details of the node tested (2 points) 
+    Details of the training model tested (1 point) 
+    Impact of the number of computing devices (8 points) 
+    Impact of the batch size (6 points) 
+        Test additional batch size 16,64,128 (GPU node) 
+        Three plots (for throughput) (3 points) 
+        One plot shows the optimal number of devices for different batch sizes (1 point) 
+        Analyses (2 points)
+% ======================================================================================================================
+\chapter{Introduction}
+Dans le cadre du projet de dynamique programing il nous a été demandé de réaliser une étude sur l'impact du nombre de ressources de calcul
+(CPU/GPU) et de la taille du batch sur les performances d'entraînement d'un modèle de deep learning. 
+Pour cela nous avons utilisé le cluster Grid5000 et plus particulièrement le noeud \textit{sophia} qui est équipé de GPU.
+
+% \section{Introduction a la tache}
+
+
+% ======================================================================================================================
+\chapter{Evaluation}
+\section{Details du noeud testé} %vgg19_bn
+\input{rapport/details_noeud}
+
+\section{Details du modele d'entraînement testé}
+\section{Impact du nombre de CPU/GPU}
+\section{Impact de la taille du batch}
+    % Test additional batch size 16,64,128 (GPU node)
+    % Three plots (for throughput) (3 points)
+    % One plot shows the optimal number of devices for different batch sizes (1 point)
+    % Analyses (2 points)
+
+\end{document}

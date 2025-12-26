@@ -44,14 +44,16 @@ def run(rank, size):
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
     sample_size = 32//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
-    model = models.resnet18()
-    model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
+    # model = models.resnet18()
+    model = models.vgg19_bn(pretrained=False)
+    # model.fc = nn.Linear(model.fc.in_features, len(dataset.classes))
+    model.classifier[6] = nn.Linear(model.classifier[6].in_features, len(dataset.classes))
     ddp_model = DDP(model)
     loss_fn = nn.CrossEntropyLoss()
     optimizer = optim.SGD(ddp_model.parameters(), lr=0.001)
 
 
-    print(f"Start running basic DDP example on rank {rank} with model Resnet18.")
+    print(f"Start running basic DDP example on rank {rank} with model VGG19_BN.")
     st = time.time()
     train_images, train_labels = next(iter(dataloader))
     et_read = time.time()
