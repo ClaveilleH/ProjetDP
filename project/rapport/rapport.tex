@@ -77,19 +77,126 @@ Pour cela nous avons utilisé le cluster Grid5000 et plus particulièrement le n
 
 % ======================================================================================================================
 \chapter{Evaluation}
-\section{Details du noeud testé} %vgg19_bn
+\section{Details du noeud testé} %VGG19\_BN
 % \input{rapport/details_noeud}
 
 \section{Details du modele d'entraînement testé}
+Le modèle utilisé dans ce projet est VGG19 avec Batch Normalization (VGG19BN),
+issu de l’architecture VGG proposée dans l’article “Very Deep Convolutional Networks for Large-Scale Image Recognition”. 
+Il s’agit d’un réseau de neurones convolutif profond composé de 19 couches avec paramètres, 
+incluant 16 couches convolutives et 3 couches entièrement connectées.
+
+La variante VGG19\_BN intègre des couches de Batch Normalization après chaque convolution, ce qui permet de stabiliser l’entraînement, 
+d’accélérer la convergence et d’améliorer l’utilisation des ressources de calcul. Le modèle est implémenté à l’aide 
+de la bibliothèque torchvision via la fonction torchvision.models.VGG19\_BN.
+
+VGG19\_BN est un modèle particulièrement exigeant en ressources, avec environ 143 millions de paramètres et un coût de calcul 
+d’environ 19,6 GFLOPS, ce qui en fait un candidat pertinent pour l’évaluation des performances et de la scalabilité sur des nœuds GPU. 
+Sa complexité permet d’observer clairement l’impact du nombre de dispositifs de calcul et de la taille des batchs sur le débit d’entraînement 
+(throughput).
+
+
 \section{Impact du nombre de CPU/GPU}
 Afin d'évaluer l'impact du nombre de ressources de calcul sur les performances d'entraînement, 
 j'ai réalisé plusieurs tests en faisant varier le nombre de CPU et de GPU utilisés.
 J'ai aussi modifié le fichier \textit{demo.py} pour enregistrer les temps de chargement des données et les temps de calculs dans des fichiers csv.
+Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer la données nécessaires aux graphiques.
 % \input{rapport/impact_devices}
 \subsection{Impact du nombre de CPU}
 % \input{rapport/impact_cpu}
 
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%     \begin{axis}[
+%         width=1\textwidth,
+%         height=0.5\textwidth,
+%         xlabel={Taille du tableau $n$},
+%         ylabel={Nombre de bits},
+%         colorbar,
+%         colormap/viridis,
+%         point meta min=0,
+%         point meta max=50,
+%         grid=major,
+%         xmode=log,                 % échelle logarithmique sur l'axe X
+%         log basis x={10},
+%         xtick={100,1000,10000},    % graduations souhaitées
+%         % xticklabel={100,1000,10000},% labels explicites (ou {100,1k,10k})
+%         xmin=90, xmax=10000         % bornes légèrement au-delà pour visibilité
+%     ]
 
+%     % Méthode 1
+%     \addplot [
+%         matrix plot*,
+%         mesh/cols=3,  % 3 valeurs de n
+%         point meta=explicit
+%     ] table     [
+%         x=n,
+%         y=max_bits,
+%         meta=time_avg,
+%         col sep=comma
+%     ] {../out/data/heatmap_method1.csv};
+%     \addlegendentry{Temps moyen (ms)}
+
+
+%     \end{axis}
+%     \end{tikzpicture}
+%     \caption{Heatmap des performances en fonction de la taille du tableau et du nombre de bits utilisés sur la Méthode 1.}
+%     \label{fig:heatmap_performance}
+% \end{figure}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        width=1\textwidth,
+        height=0.5\textwidth,
+        xlabel={Nombre de CPU},
+        ylabel={Time (ms)},
+        legend pos=north east,
+        grid=major,
+    ]
+    % TOTAL TIME
+    \addplot[
+        color=blue,
+        mark=square,
+    ]
+    table[
+        x=nb_cpu,
+        y=total_time,
+        col sep=semicolon
+    ] {../results/assets/fig1.csv};
+    \addlegendentry{Total Time}
+    
+    % COMPUTING TIME
+    \addplot[
+        color=red,
+        mark=triangle,
+    ]
+    table[
+        x=nb_cpu,
+        y=computing_time,
+        col sep=semicolon
+    ] {../results/assets/fig1.csv};
+    \addlegendentry{Computing Time}
+    
+    % LOADING TIME
+    \addplot[
+        color=green,
+        mark=o,
+    ]
+    table[
+        x=nb_cpu,
+        y=loading_time,
+        col sep=semicolon
+    ] {../results/assets/fig1.csv};
+    \addlegendentry{Loading Time}   
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Impact du nombre de CPU sur les temps d'entraînement.}
+    % \label{fig:impact_cpu}
+\end{figure}
+
+On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentation du nombre de CPU permet de XXXXX.
 \subsection{Impact du nombre de GPU}
 % \input{rapport/impact_gpu}
 \section{Impact de la taille du batch}

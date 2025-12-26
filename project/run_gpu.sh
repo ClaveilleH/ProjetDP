@@ -7,7 +7,9 @@ NPROC_PER_NODE=${NPROC_PER_NODE:-1}
 # echo "<----------------------------------->"
 # torchrun --nnodes=1 --nproc-per-node=2 demo_gpu.py
 
-
+torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
+# warmup donc on remet a zero les resultats
+echo "rank;size;total_loading_time;total_computing_time;total_time" > results/results_cpu.csv
 
 #1
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
