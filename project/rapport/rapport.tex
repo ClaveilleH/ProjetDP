@@ -148,10 +148,13 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
     \centering
     \begin{tikzpicture}
     \begin{axis}[
+        xtick distance=1,            % pas des graduations = 1
+        /pgf/number format/fixed,    % format fixe
+        /pgf/number format/precision=0, % 0 décimales -> entiers
         width=1\textwidth,
         height=0.5\textwidth,
         xlabel={Nombre de CPU},
-        ylabel={Time (ms)},
+        ylabel={Time (s)},
         legend pos=north east,
         grid=major,
     ]

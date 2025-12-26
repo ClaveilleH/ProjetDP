@@ -1,6 +1,6 @@
 import csv
 
-i = "1"
+i = "3"
 input_file = f"results/CPU/{i}/results_{i}cpu.csv"
 output_file = f"results/CPU/{i}/output_{i}cpu.csv"
 
