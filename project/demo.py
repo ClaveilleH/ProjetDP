@@ -79,9 +79,7 @@ if __name__ == "__main__":
     size = dist.get_world_size()
     rank = dist.get_rank()
     loading_time, computing_time = run(rank, size)
-    total_loading_time = sum(loading_time)
-    total_computing_time = sum(computing_time)
     # on stocke le resultat dans un fichier csv pour pouvoir le traiter plus tard
-    with open("results_cpu.csv", "a") as f:
-        f.write(f"{rank};{size};{total_loading_time};{total_computing_time};{total_loading_time+total_computing_time}\n")
+    with open("results/results_cpu.csv", "a") as f:
+        f.write(f"{rank};{size};{loading_time};{computing_time};{loading_time+computing_time}\n")
     
