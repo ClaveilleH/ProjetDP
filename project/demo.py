@@ -13,6 +13,11 @@ from torch.utils.data import DataLoader
 
 from torch.nn.parallel import DistributedDataParallel as DDP
 
+loading_time = []
+total_loading_time = 0
+computing_time = []
+total_computing_time = 0
+
 
 def run(rank, size):
     # --- 1. Set paths ---
@@ -59,11 +64,15 @@ def run(rank, size):
     train_images, train_labels = next(iter(dataloader))
     et_read = time.time()
     print(f'Loading time: {et_read-st} seconds')
+    loading_time.append(et_read-st)
+    total_loading_time += (et_read-st)
     optimizer.zero_grad()
     outputs = ddp_model(train_images)
     loss_fn(outputs, train_labels).backward()
     et = time.time()
     print(f'Computing + Communication time: {et-et_read} seconds')
+    computing_time.append(et-et_read)
+    total_computing_time += (et-et_read)
     optimizer.step()
     dist.destroy_process_group()
     print(f"Finished running basic DDP example on rank {rank}.")
@@ -73,3 +82,9 @@ if __name__ == "__main__":
     size = dist.get_world_size()
     rank = dist.get_rank()
     run(rank, size)
+    # on stocke le resultat dans un fichier pour le recuperer apres
+    with open(f'result_gpu_rank{rank}.txt', 'w') as f:
+        f.write(f'Loading times: {loading_time}\n')
+        f.write(f'Total loading time: {total_loading_time}\n')
+        f.write(f'Computing times: {computing_time}\n')
+        f.write(f'Total computing time: {total_computing_time}\n')
