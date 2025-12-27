@@ -7,7 +7,7 @@ NPROC_PER_NODE=${NPROC_PER_NODE:-1}
 # Script to run: can be passed as first argument or via env var SCRIPT
 # Usage: ./run_gpu.sh [script_to_run] [-- optional args passed to the script]
 # SCRIPT=${1:-${SCRIPT:-demo.py}}
-SCRIPT="demo.py"
+SCRIPT="demo_gpu.py"
 # remaining args (if any) are passed to the executed script
 # SCRIPT_ARGS="${@:2}"
 SCRIPT_ARGS=""
