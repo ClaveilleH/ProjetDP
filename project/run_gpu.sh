@@ -21,67 +21,67 @@ echo "Running script: $SCRIPT $SCRIPT_ARGS with NPROC_PER_NODE=$NPROC_PER_NODE"
 
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
 # warmup donc on remet a zero les resultats
-echo "rank;size;total_loading_time;total_computing_time;total_time" > results/results_cpu.csv
+echo "rank;size;total_loading_time;total_computing_time;total_time" > results/results_gpu.csv
 
 #1
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-# append dans le fichier results_cpu.csv des 0 pour separer les resultats 
+# append dans le fichier results_gpu.csv des 0 pour separer les resultats 
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #2
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #3
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #4
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv  
+echo ";;;;" >> results/results_gpu.csv  
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv  
+echo ";;;;" >> results/results_gpu.csv  
 
 #5
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #6
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #7
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #8
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #9
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 #10
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_cpu.csv
+echo ";;;;" >> results/results_gpu.csv
 
 
 
