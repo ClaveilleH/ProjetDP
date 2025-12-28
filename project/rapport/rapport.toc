@@ -6,4 +6,4 @@
 \contentsline {section}{\numberline {2.3}Impact du nombre de CPU/GPU}{4}{section.2.3}%
 \contentsline {subsection}{\numberline {2.3.1}Impact du nombre de CPU}{5}{subsection.2.3.1}%
 \contentsline {subsection}{\numberline {2.3.2}Impact du nombre de GPU}{5}{subsection.2.3.2}%
-\contentsline {section}{\numberline {2.4}Impact de la taille du batch}{5}{section.2.4}%
+\contentsline {section}{\numberline {2.4}Impact de la taille du batch}{6}{section.2.4}%

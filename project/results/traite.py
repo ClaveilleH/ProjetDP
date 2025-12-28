@@ -1,8 +1,8 @@
 import csv
 
-i = "3"
-input_file = f"results/CPU/{i}/results_{i}cpu.csv"
-output_file = f"results/CPU/{i}/output_{i}cpu.csv"
+i = "1"
+input_file = f"results/GPU/{i}/results_{i}gpu.csv"
+output_file = f"results/GPU/{i}/output_{i}gpu.csv"
 
 runs = []
 current_run = []

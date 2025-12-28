@@ -122,7 +122,7 @@ def aggregate_results(results_cpu_dir, out_path):
 
 if __name__ == '__main__':
 	base = os.path.dirname(__file__)
-	results_cpu_dir = os.path.join(base, 'CPU')
-	out = os.path.join(base, 'assets', 'fig1.csv')
+	results_cpu_dir = os.path.join(base, 'GPU')
+	out = os.path.join(base, 'assets', 'fig2.csv')
 	aggregate_results(results_cpu_dir, out)
 	print('Wrote', out)

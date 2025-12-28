@@ -199,9 +199,66 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
     % \label{fig:impact_cpu}
 \end{figure}
 
-On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentation du nombre de CPU permet de XXXXX.
+On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentation du nombre de CPU ne permet pas de réduire le temps d'entraînement.
+
+
 \subsection{Impact du nombre de GPU}
-% \input{rapport/impact_gpu}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        xtick distance=1,            % pas des graduations = 1
+        /pgf/number format/fixed,    % format fixe
+        /pgf/number format/precision=0, % 0 décimales -> entiers
+        width=1\textwidth,
+        height=0.5\textwidth,
+        xlabel={Nombre de CPU},
+        ylabel={Time (s)},
+        legend pos=north east,
+        grid=major,
+    ]
+    % TOTAL TIME
+    \addplot[
+        color=blue,
+        mark=square,
+    ]
+    table[
+        x=nb_cpu,
+        y=total_time,
+        col sep=semicolon
+    ] {../results/assets/fig2.csv};
+    \addlegendentry{Total Time}
+    
+    % COMPUTING TIME
+    \addplot[
+        color=red,
+        mark=triangle,
+    ]
+    table[
+        x=nb_cpu,
+        y=computing_time,
+        col sep=semicolon
+    ] {../results/assets/fig2.csv};
+    \addlegendentry{Computing Time}
+    
+    % LOADING TIME
+    \addplot[
+        color=green,
+        mark=o,
+    ]
+    table[
+        x=nb_cpu,
+        y=loading_time,
+        col sep=semicolon
+    ] {../results/assets/fig2.csv};
+    \addlegendentry{Loading Time}   
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Impact du nombre de GPU sur les temps d'entraînement.}
+    % \label{fig:impact_cpu}
+\end{figure}
+On peut observer que l'augmentation du nombre de GPU permet de réduire légèrement le temps d'entraînement,
+mais l'impact reste limité sur ce modèle et cette configuration. A noter que le temps de chargement a partir de 4 GPU augmente significativement.
 \section{Impact de la taille du batch}
     % Test additional batch size 16,64,128 (GPU node)
     % Three plots (for throughput) (3 points)
