@@ -103,13 +103,6 @@ def main():
     size = dist.get_world_size()
     rank = dist.get_rank()
     
-    # Créer le dossier results s'il n'existe pas
-    if rank == 0:
-        os.makedirs("results", exist_ok=True)
-        # Créer le fichier CSV avec l'en-tête
-        with open(OUTPUT_FILE, "w") as f:
-            f.write("size;batch_size;total_loading_time;total_computing_time;total_time\n")
-    
     dist.barrier()
     
     # Tester différents batch sizes

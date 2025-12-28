@@ -14,10 +14,7 @@ SCRIPT_ARGS=""
 
 echo "Running script: $SCRIPT $SCRIPT_ARGS with NPROC_PER_NODE=$NPROC_PER_NODE"
 rm -f results/results_gpu.csv
-
-# torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo_gpu.py
-# echo "<----------------------------------->"
-# torchrun --nnodes=1 --nproc-per-node=2 demo_gpu.py
+echo "size;batch_size;total_loading_time;total_computing_time;total_time\n" >> results/results_gpu.csv
 
 torchrun --nnodes=1 --nproc-per-node=1 "$SCRIPT"
 
