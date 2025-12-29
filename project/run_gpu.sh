@@ -2,68 +2,26 @@
 module load conda
 conda activate ~/.conda/envs/pytorch/
 # Default number of processes per node (can be overridden by exporting NPROC_PER_NODE before running)
-NPROC_PER_NODE=${NPROC_PER_NODE:-1}
 
 # Script to run: can be passed as first argument or via env var SCRIPT
 # Usage: ./run_gpu.sh [script_to_run] [-- optional args passed to the script]
 # SCRIPT=${1:-${SCRIPT:-demo.py}}
-SCRIPT="demo_gpu.py"
+SCRIPT="new_gpu.py"
 # remaining args (if any) are passed to the executed script
 # SCRIPT_ARGS="${@:2}"
 SCRIPT_ARGS=""
 
-echo "Running script: $SCRIPT $SCRIPT_ARGS with NPROC_PER_NODE=$NPROC_PER_NODE"
+rm -f results/results_gpu.csv
+echo "size;batch_size;total_loading_time;total_computing_time;total_time\n" >> results/results_gpu.csv
 
+torchrun --nnodes=1 --nproc-per-node=1 "$SCRIPT"
 
-# torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo_gpu.py
-# echo "<----------------------------------->"
-# torchrun --nnodes=1 --nproc-per-node=2 demo_gpu.py
+torchrun --nnodes=1 --nproc-per-node=2 "$SCRIPT"
 
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} demo.py
-# warmup donc on remet a zero les resultats
-echo "rank;size;total_loading_time;total_computing_time;total_time" > results/results_gpu.csv
+torchrun --nnodes=1 --nproc-per-node=3 "$SCRIPT"
 
-#1
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
+torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT"
 
-#2
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
+torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT"
 
-#3
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#4
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv  
-
-#5
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#6
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#7
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#8
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#9
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-#10
-torchrun --nnodes=1 --nproc-per-node=${NPROC_PER_NODE} "$SCRIPT" $SCRIPT_ARGS
-echo ";;;;" >> results/results_gpu.csv
-
-
-
-# echo "<----------------------------------->"
-# torchrun --nnodes=1 --nproc-per-node=8 demo_gpu.pygit config pull.rebase true
+torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT"
