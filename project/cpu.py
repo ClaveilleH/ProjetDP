@@ -12,6 +12,7 @@ from torchvision.datasets.utils import download_url
 from torch.utils.data import DataLoader
 
 from torch.nn.parallel import DistributedDataParallel as DDP
+import sys
 
 
 
@@ -44,7 +45,7 @@ def run(rank, size):
     dataset_size = len(dataset)
     localdataset_size = dataset_size//size
     local_dataset = torch.utils.data.Subset(dataset, range(rank*localdataset_size, (rank+1)*localdataset_size))
-    sample_size = 32//size
+    sample_size = batch_size//size
     dataloader = DataLoader(local_dataset, batch_size=sample_size, shuffle=True)
     # model = models.resnet18()
     # model = models.vgg19_bn(pretrained=False)
@@ -75,11 +76,15 @@ def run(rank, size):
     return loading_time, computing_time
 
 if __name__ == "__main__":
+    # on recupere le batch size en argument
+    # sinon 32
+
+    batch_size = int(sys.argv[1]) if len(sys.argv) > 1 else 32
     dist.init_process_group("gloo", init_method="env://")
     size = dist.get_world_size()
     rank = dist.get_rank()
     loading_time, computing_time = run(rank, size)
     # on stocke le resultat dans un fichier csv pour pouvoir le traiter plus tard
     with open("results/results_cpu.csv", "a") as f:
-        f.write(f"{rank};{size};{loading_time};{computing_time};{loading_time+computing_time}\n")
+        f.write(f"{rank};{size};{batch_size};{loading_time};{computing_time};{loading_time+computing_time}\n")
     
