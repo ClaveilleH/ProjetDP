@@ -35,11 +35,11 @@ do
     torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
     torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
 
-    torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
 
-    torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=6 "$SCRIPT" "$batch_size"
 done
