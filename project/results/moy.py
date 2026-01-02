@@ -1,7 +1,7 @@
 import pandas as pd
 
 # Charger le CSV (adapter le nom du fichier)
-df = pd.read_csv("results/CPU/result_all.csv", sep=";")
+df = pd.read_csv("results/GPU/result_all.csv", sep=";")
 
 # Colonnes de temps à moyenner
 time_columns = [
@@ -21,4 +21,4 @@ mean_df = (
 print(mean_df)
 
 # Optionnel : sauvegarder dans un nouveau CSV
-mean_df.to_csv("results/CPU/mean_times_by_size_batch.csv", sep=";", index=False)
+mean_df.to_csv("results/GPU/mean_times_by_size_batch.csv", sep=";", index=False)

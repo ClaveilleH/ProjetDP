@@ -248,6 +248,9 @@ On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentatio
     \caption{Impact du nombre de GPU sur les temps d'entraînement.}
     % \label{fig:impact_cpu}
 \end{figure}
+On peut observer que l'augmentation du nombre de GPU permet de réduire légèrement le temps d'entraînement,
+mais l'impact reste limité sur ce modèle et cette configuration. A noter que le temps de chargement a partir de 4 GPU augmente significativement.
+
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
@@ -280,9 +283,6 @@ On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentatio
     \label{fig:throughput_gpu}
 \end{figure}
 
-On peut observer que l'augmentation du nombre de GPU permet de réduire légèrement le temps d'entraînement,
-mais l'impact reste limité sur ce modèle et cette configuration. A noter que le temps de chargement a partir de 4 GPU augmente significativement.
-
 
 
 \section{Impact de la taille du batch}
@@ -290,187 +290,14 @@ mais l'impact reste limité sur ce modèle et cette configuration. A noter que l
     % Three plots (for throughput) (3 points)
     % One plot shows the optimal number of devices for different batch sizes (1 point)
     % Analyses (2 points)
-
-% Three throughput plots vs number of gpus devices for batch size 16, 64, 128 respectively
-Commençons par visualiser les variations des temps d'entraînement en fonction du nombre de GPU pour un batch de taille 16.
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
     \begin{axis}[
-        xtick distance=1,
-        /pgf/number format/fixed,
-        /pgf/number format/precision=0,
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Number of Devices},
-        ylabel={Throughput (samples/s)},
-        legend pos=north west,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour batch_size = 16
-    \addplot[
-        color=blue,
-        mark=square,
-    ]
-    table[
-        x=size,
-        y expr={16/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig3.csv};
-    \addlegendentry{Throughput (batch size = 16)}
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Throughput en fonction du nombre de GPU (batch size = 16).}
-    \label{fig:throughput_batch16}
-\end{figure}
-
-
-%Même démarche pour un batch de taille 64.
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick distance=1,
-        /pgf/number format/fixed,
-        /pgf/number format/precision=0,
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Number of Devices},
-        ylabel={Throughput (samples/s)},
-        legend pos=north west,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour batch_size = 64
-    \addplot[
-        color=blue,
-        mark=square,
-    ]
-    table[
-        x=size,
-        y expr={64/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig4.csv};
-    \addlegendentry{Throughput (batch size = 64)}
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Throughput en fonction du nombre de GPU (batch size = 64).}
-    \label{fig:throughput_batch64}
-\end{figure}
-
-%Même démarche pour un batch de taille 128.
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick distance=1,
-        /pgf/number format/fixed,
-        /pgf/number format/precision=0,             % 0 décimales -> entiers
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Number of Devices},
-        ylabel={Throughput (samples/s)},
-        legend pos=north west,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour batch_size = 128
-    \addplot[
-        color=blue,
-        mark=square,
-    ]
-    table[
-        x=size,
-        y expr={128/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig5.csv};
-    \addlegendentry{Throughput (batch size = 128)}
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Throughput en fonction du nombre de GPU (batch size = 128).}
-    \label{fig:throughput_batch128}
-\end{figure}
-
-
-% One plot shows the optimal number of devices for different batch sizes
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick={16,64,128},
-        % /pgf/number format/fixed,
-        % /pgf/number format/precision=0,
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Batch Size},
-        ylabel={Throughput (samples/s)},
-        legend pos=north west,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour nb_devices = 1
-    \addplot[
-        color=blue,
-        mark=square,
-    ]   
-    table[
-        x=batch_size,
-        y expr={\thisrow{batch_size}/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig6.csv};
-    \addlegendentry{Throughput (1 GPU)}
-
-    % Pour nb_devices = 2
-    \addplot[
-        color=red,
-        mark=triangle,
-    ]   
-    table[
-        x=batch_size,
-        y expr={\thisrow{batch_size}/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig7.csv};
-    \addlegendentry{Throughput (2 GPUs)}
-
-    % Pour nb_devices = 3
-    \addplot[
-        color=green,
-        mark=o,
-    ]   
-    table[
-        x=batch_size,
-        y expr={\thisrow{batch_size}/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig8.csv};
-    \addlegendentry{Throughput (3 GPUs)}
-
-    % Pour nb_devices = 4
-    \addplot[
-        color=orange,
-        mark=diamond,
-    ]   
-    table[
-        x=batch_size,
-        y expr={\thisrow{batch_size}/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig9.csv};
-    \addlegendentry{Throughput (4 GPUs)}             
-
-
-
-    \end{axis}
-    \end{tikzpicture}
-    \label{fig:throughput_batch_size_1_device}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick={16,64,128},
-        % /pgf/number format/fixed,
-        % /pgf/number format/precision=0,
+        % xtick distance=1,            % pas des graduations = 1
+        % /pgf/number format/fixed,    % format fixe
+        % /pgf/number format/precision=0, % 0 décimales -> entiers
+        xtick={16,32,64,128,256},
         width=1\textwidth,
         height=0.5\textwidth,
         xlabel={Batch Size},
@@ -478,65 +305,197 @@ Commençons par visualiser les variations des temps d'entraînement en fonction 
         legend pos=north west,
         grid=major,
     ]
-    % Throughput = batch_size / total_time
-    % Pour nb_devices = 1
+    
+    % Courbe pour 1 CPU
     \addplot[
         color=blue,
         mark=square,
-    ]   
+    ]
     table[
         x=batch_size,
-        y expr={\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig6.csv};
-    \addlegendentry{Time (1 GPU)}
-
-    % Pour nb_devices = 2
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{1:1}  % Filtre pour size=1 (remplacer par le nb de CPU voulu)
+    ] {../results/CPU/all.csv};
+    \addlegendentry{1 CPU}
+    
+    % Courbe pour 2 CPU
     \addplot[
         color=red,
         mark=triangle,
-    ]   
+    ]
     table[
         x=batch_size,
-        y expr={\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig7.csv};
-    \addlegendentry{Time (2 GPUs)}
-
-    % Pour nb_devices = 3
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{2:2}  % Filtre pour size=2
+    ] {../results/CPU/all.csv};
+    \addlegendentry{2 CPU}
+    
+    % Courbe pour 3 CPU
     \addplot[
         color=green,
         mark=o,
-    ]   
+    ]
     table[
         x=batch_size,
-        y expr={\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig8.csv};
-    \addlegendentry{Time (3 GPUs)}
-
-    % Pour nb_devices = 4
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{3:3}  % Filtre pour size=4
+    ] {../results/CPU/all.csv};
+    \addlegendentry{3 CPU}
+    
+    % Courbe pour 4 CPU
     \addplot[
         color=orange,
         mark=diamond,
-    ]   
+    ]
     table[
         x=batch_size,
-        y expr={\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig9.csv};
-    \addlegendentry{Time (4 GPUs)}             
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{4:4}  % Filtre pour size=8
+    ] {../results/CPU/all.csv};
+    \addlegendentry{4 CPU}
+    
+    % Courbe pour 5 CPU
+    \addplot[
+        color=purple,
+        mark=star,
+    ]
+    table[
+        x=batch_size,
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{5:5}  % Filtre pour size=16
+    ] {../results/CPU/all.csv};
+    \addlegendentry{5 CPU}
 
+    % Courbe pour 6 CPU
+    \addplot[
+        color=brown,
+        mark=oplus,
+    ]
+    table[
+        x=batch_size,
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{6:6}  % Filtre pour size=32
+    ] {../results/CPU/all.csv};
+    \addlegendentry{6 CPU}
 
 
     \end{axis}
     \end{tikzpicture}
-    \label{fig:throughput_batch_size_1_device}
+    \caption{Impact du batch size sur le temps total d'entraînement pour différents nombres de CPU.}
+    % \label{fig:impact_batchsize}
 \end{figure}
-=================================================
 On peut donc voir que pour quelque soit la taille de batch, l'augmentation du nombre de CPU n'est pas plus efficace qu'avec un seul CPU.
 Mais qu'à partir du moment ou il y a plusieurs CPU, plus le nombre de CPU est grand, plus le temps d'entraînement est réduit.
 On peut aussi observer que l'augmentation de la taille du batch augmente le temps d'entraînement total.
 Nous allons maintenant visualiser quel est la raison de cette augmentation du temps d'entraînement en regardant les temps de chargement et de calculs séparément.
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+    \begin{axis}[
+        % xtick distance=1,            % pas des graduations = 1
+        % /pgf/number format/fixed,    % format fixe
+        % /pgf/number format/precision=0, % 0 décimales -> entiers
+        xtick={16,32,64,128,256},
+        width=1\textwidth,
+        height=0.5\textwidth,
+        xlabel={Batch Size},
+        ylabel={Time (s)},
+        legend pos=north west,
+        grid=major,
+    ]
+    % Courbe pour 1 CPU
+    \addplot[
+        color=blue,
+        mark=square,
+    ]
+    table[
+        x=batch_size,
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{1:1}  % Filtre pour size=1 (remplacer par le nb de CPU voulu)
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Total 1 CPU}
+    % Courbe pour 1 CPU - Loading time
+    % en pointillés
+    \addplot[
+        color=blue,
+        mark=square,
+        dashed
+    ]
+    table[
+        x=batch_size,
+        y=total_loading_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{1:1}  % Filtre pour size=1 (remplacer par le nb de CPU voulu)
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Loading 1 CPU}
+    % Courbe pour 1 CPU - Computing time
+    
+    \addplot[
+        color=blue,
+        mark=square,
+        dashdotted
+    ]
+    table[
+        x=batch_size,
+        y=total_computing_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{1:1}  % Filtre pour size=1 (remplacer par le nb de CPU voulu)
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Computing 1 CPU}
+
+    
+    % Courbe pour 3 CPU
+    \addplot[
+        color=red,
+        mark=square,
+    ]
+    table[
+        x=batch_size,
+        y=total_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{3:3}  % Filtre pour size=3
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Total 3 CPU}
+    % Courbe pour 3 CPU - Loading time
+    % en pointillés
+    \addplot[
+        color=red,
+        mark=square,
+        dashed
+    ]
+    table[
+        x=batch_size,
+        y=total_loading_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{3:3}  % Filtre pour size=3
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Loading 3 CPU}
+    % Courbe pour 3 CPU - Computing time
+    \addplot[
+        color=red,
+        mark=square,
+        dashdotted
+    ]
+    table[
+        x=batch_size,
+        y=total_computing_time,
+        col sep=semicolon,
+        restrict expr to domain={\thisrow{size}}{3:3}  % Filtre pour size=3
+    ] {../results/CPU/all.csv};
+    \addlegendentry{Computing 3 CPU}
+    \end{axis}
+    \end{tikzpicture}
+    \caption{Impact du batch size sur les temps de chargement et de calculs pour 1 et 3 CPU.}
+    % \label{fig:impact_batchsize}
+\end{figure}
+On peut observer que l'augmentation de la taille du batch augmente principalement le temps de calculs
+
 
 \end{document}
