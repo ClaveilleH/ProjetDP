@@ -119,4 +119,4 @@ if __name__ == "__main__":
     loading_time, computing_time = run(rank, size, batch_size)
     # on stocke le resultat dans un fichier csv pour pouvoir le traiter plus tard
     with open("results/results_gpu.csv", "a") as f:
-        f.write(f"{rank};{size};{loading_time};{computing_time};{loading_time+computing_time}\n")
+        f.write(f"{rank};{size};{batch_size};{loading_time};{computing_time};{loading_time+computing_time}\n")

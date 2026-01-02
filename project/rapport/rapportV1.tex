@@ -123,7 +123,7 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
         mark=square,
     ]
     table[
-        x=size,
+        x=nb_cpu,
         y=total_time,
         col sep=semicolon
     ] {../results/assets/fig1.csv};
@@ -135,7 +135,7 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
         mark=triangle,
     ]
     table[
-        x=size,
+        x=nb_cpu,
         y=computing_time,
         col sep=semicolon
     ] {../results/assets/fig1.csv};
@@ -147,7 +147,7 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
         mark=o,
     ]
     table[
-        x=size,
+        x=nb_cpu,
         y=loading_time,
         col sep=semicolon
     ] {../results/assets/fig1.csv};
@@ -159,38 +159,6 @@ Enfin, j'ai utilisé des scripts python pour traiter les résultats et générer
 \end{figure}
 
 On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentation du nombre de CPU ne permet pas de réduire le temps d'entraînement.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick distance=1,
-        /pgf/number format/fixed,
-        /pgf/number format/precision=0,
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Number of Devices},
-        ylabel={Throughput (samples/s)},
-        legend pos=north east,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour batch_size = 32
-    \addplot[
-        color=blue,
-        mark=square,
-    ]
-    table[
-        x=size,
-        y expr={32/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig1.csv};
-    \addlegendentry{Throughput (batch size = 32)}
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Throughput en fonction du nombre de CPU.}
-    \label{fig:throughput_cpu}
-\end{figure}
 
 
 \subsection{Impact du nombre de GPU}
@@ -250,41 +218,6 @@ On peut donc observer que sur un batch de taille donnée (32 ici), l'augmentatio
 \end{figure}
 On peut observer que l'augmentation du nombre de GPU permet de réduire légèrement le temps d'entraînement,
 mais l'impact reste limité sur ce modèle et cette configuration. A noter que le temps de chargement a partir de 4 GPU augmente significativement.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-    \begin{axis}[
-        xtick distance=1,
-        /pgf/number format/fixed,
-        /pgf/number format/precision=0,
-        width=1\textwidth,
-        height=0.5\textwidth,
-        xlabel={Number of Devices},
-        ylabel={Throughput (samples/s)},
-        legend pos=south west,
-        grid=major,
-    ]
-    % Throughput = batch_size / total_time
-    % Pour batch_size = 32
-    \addplot[
-        color=blue,
-        mark=square,
-    ]
-    table[
-        x=nb_cpu,
-        y expr={32/\thisrow{total_time}},  % Calcul du throughput
-        col sep=semicolon
-    ] {../results/assets/fig2.csv};
-    \addlegendentry{Throughput (batch size = 32)}
-    \end{axis}
-    \end{tikzpicture}
-    \caption{Throughput en fonction du nombre de GPU.}
-    \label{fig:throughput_gpu}
-\end{figure}
-
-
-
 \section{Impact de la taille du batch}
     % Test additional batch size 16,64,128 (GPU node)
     % Three plots (for throughput) (3 points)

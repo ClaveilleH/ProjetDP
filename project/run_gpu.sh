@@ -17,7 +17,7 @@ echo "size;batch_size;total_loading_time;total_computing_time;total_time\n" >> r
 
 
 
-for batch_size in 16 32 64 128 256
+for batch_size in 16 64 128
 do
     torchrun --nnodes=1 --nproc-per-node=1 "$SCRIPT" "$batch_size"
     torchrun --nnodes=1 --nproc-per-node=1 "$SCRIPT" "$batch_size"
@@ -31,9 +31,9 @@ do
     torchrun --nnodes=1 --nproc-per-node=3 "$SCRIPT" "$batch_size"
     torchrun --nnodes=1 --nproc-per-node=3 "$SCRIPT" "$batch_size"
 
-    torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
-    torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
+    # torchrun --nnodes=1 --nproc-per-node=4 "$SCRIPT" "$batch_size"
 
     # torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
     # torchrun --nnodes=1 --nproc-per-node=5 "$SCRIPT" "$batch_size"
